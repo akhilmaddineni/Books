@@ -68,6 +68,72 @@ fn main() {
 - In Rust memory is automatically returned once the variable that owns it goes out of scope 
 - When a variable goes out of scope , Rust calls a special function drop , Rust calls drop automatically at the closing curly bracket 
 
+### Ways Variables and Data Interact: Move
+```
+fn main() {
+    let x = 5;
+    let y = x;
+}
+```
+
+In the example above , bind the value 5 to x; then make a copy of the value in x and bind it to y.” We now have two variables, x and y, and both equal 5
+
+```
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1;
+}
+```
+
+In the example above , the behaviour is different : When we assign s1 to s2 , the String data is copied , meaning we copy the pointer , the length and capacity that are on the stack. 
+
+- Rust doesnt copy the heap data otherwise this could be very expensive runtime operation if heap data is huge 
+- When s2 and s1 go out of scope , they will both try to free the same memory. This is known as double free error and is one of the memory safety bugs , Freeing memory twice can lead to memory corruption . 
+```
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1;
+
+    println!("{}, world!", s1);
+}
+```
+
+- The above program returns an error , as after the line let s2=s1 , Rust considers s1 as no longer valid. Therefore rust doesnt need to free anything when s1 goes out of scope .
+- This is kind of a shallow copy , Rust will never automatically create a deep copy of the data .  
+
+### Ways Variables and Data interact : Clone 
+If we want to deeply copy the heap data , not just the stack data then we can use a method called clone 
+```
+fn main() {
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+
+    println!("s1 = {}, s2 = {}", s1, s2);
+}
+```
+
+
+
+### Stack-Only Data : Copy 
+```
+fn main() {
+    let x = 5;
+    let y = x;
+
+    println!("x = {}, y = {}", x, y);
+}
+```
+
+- The above code works without calling clone cause the size of integer is known at compile time and stored entirely on stack , so copies of actual values are quick to make . 
+
+Here are some of the types that implement Copy:
+- All the integer types, such as u32.
+- The Boolean type, bool, with values true and false.
+- All the floating point types, such as f64.
+- The character type, char.
+- Tuples, if they only contain types that also implement Copy. For example, (i32, i32) implements Copy, but (i32, String) does not.
+
+
 
 
 
