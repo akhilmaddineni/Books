@@ -133,8 +133,108 @@ Here are some of the types that implement Copy:
 - The character type, char.
 - Tuples, if they only contain types that also implement Copy. For example, (i32, i32) implements Copy, but (i32, String) does not.
 
+## Ownership and Functions  
+
+```
+fn main() {
+    let s = String::from("hello");  // s comes into scope
+
+    takes_ownership(s);             // s's value moves into the function...
+                                    // ... and so is no longer valid here
+
+    let x = 5;                      // x comes into scope
+
+    makes_copy(x);                  // x would move into the function,
+                                    // but i32 is Copy, so it's okay to still
+                                    // use x afterward
+
+} // Here, x goes out of scope, then s. But because s's value was moved, nothing
+  // special happens.
+
+fn takes_ownership(some_string: String) { // some_string comes into scope
+    println!("{}", some_string);
+} // Here, some_string goes out of scope and `drop` is called. The backing
+  // memory is freed.
+
+fn makes_copy(some_integer: i32) { // some_integer comes into scope
+    println!("{}", some_integer);
+} // Here, some_integer goes out of scope. Nothing special happens.
+```
+
+- If we tried to use s after the call to takes_ownership, Rust would throw a compile-time error. 
+- But this is too much imo. Book mentions “Rust has a feature for using a value without transferring ownership, called references.”
+
+### References and Borrowing 
+- A Reference is like a pointer in that its an address we can follow to access the data stored at that address. 
+- Unlike a pointer , A reference is guaranteed to point to a valid value of a particular type for the life of that reference. 
+```
+fn main() {
+    let s1 = String::from("hello");
+
+    let len = calculate_length(&s1);
+
+    println!("The length of '{}' is {}.", s1, len);
+}
+
+fn calculate_length(s: &String) -> usize {
+    s.len()
+}
+```
 
 
+By default references are immutable , it needs to be explicitly specified as mutable to edit the reference . 
 
+```
+fn main() {
+    let mut s = String::from("hello");
+
+    change(&mut s);
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+```
+
+- When functions have references as parameters instead of actual values , we wont need to return the values in order to give back ownership , because we never had ownership
+- Mutable references have one big restriction: if you have a mutable reference to a value, you can have no other references to that value
+- Rust refuses to compile code with data races . 
+- We can use curly brackets to create a new scope , allowing for multiple mutable references just not simultaneous ones 
+- You cant combine mutable and non mutable references in a single scope 
+
+### Dangling References 
+- In languages with pointers its easy to erroneously create a dangling pointer , A pointer that references a location in memory taht may have been given to someone else , by freeing some memory while preserving the pointer to that memory . 
+- Rust compiler guarantees that references will never be dangling references .
+
+### Rules of references : 
+- At any given time , you can have wither one mutable reference or any number of immutable references. 
+- References must always be valid 
+
+### Slice Type 
+- Slice let you reference a contiguous sequence of elements in a collection rather than the whole collection . 
+- A slice is kind of a reference so it doesnt have ownership . 
+String slice : 
+
+```
+fn main() {
+    let s = String::from("hello world");
+
+    let hello = &s[0..5];
+    let world = &s[6..11];
+}
+```
+
+### Structs 
+- Custom data type that lets you package together and name multiple related values that make up a meaningful group. 
+- Structs are similar to tuples but you need name ach piece of data so its clear what the values mean . 
+
+```
+struct User {
+    active: bool,
+    username: String,
+    email: String,
+    sign_in_count: u64,
+}
+```
 
 
