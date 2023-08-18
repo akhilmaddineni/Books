@@ -40,3 +40,54 @@ I have fairly good experience on C from work but no formal study from university
 - 0x - hex , 0 - Octal , 3UL - unsigned long , 3.14f - float , 3.14L - double 
 - 1 = True , 0 = False 
 
+## Lecture 3 - Control flow. Functions and modular programming. Variable scope. Static and global variables
+
+- Blocks can substitute for simple statement , complied as single unit 
+- Variables can be declared inside , no semicolon necessary at the end 
+- C89/90 doesnt have boolean type , c99 bool type is available in stdbool.h
+- Expression is non zero - true 
+- Expression must be numeric  
+- Extern Keyword 
+    - Need to inform other sourcefiles about functions/global variables in somefile.c
+    - for functions : put function prototypes in header file 
+    - for variables : re-declare the global variable using the extern keyword in header file 
+    - extern informs compiler that variable defined somewhere else 
+    - enable access/modifying of global variable from other source files 
+- Static variables 
+    - Static keyword has two meanings depending on where the static variable is declared 
+    - Outside the function , static variables/functions only visible within that file, not globallly (cannot be externed)
+    - Inside a function , static variables : 
+        - are still local to that function 
+        - are initialized only during program initialization 
+        - donot get re-initialized with each function call 
+
+- Register Variables 
+    - During execution , data processed in registers 
+    - Explicitly store commonly used data in registers - minimize load/store overhead 
+    - Can explicitly declare certain variables as registers using register keyword 
+        - must be simple type (implementation dependent)
+        - only local vars and function arguments eligible 
+        - excess/unallowed register declarations ignored, compiled as regular variables 
+        - Registers donot reside in addressed memory so pointer of a register variable is illegal 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
