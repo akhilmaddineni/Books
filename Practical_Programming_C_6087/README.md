@@ -30,3 +30,13 @@ I have fairly good experience on C from work but no formal study from university
 - #error , #warning - trigger a custom compiler warning 
 - #undef msg - remove definition of message during compile time
 
+## Lecture 2 - Variables, Datatypes and Operators
+- C is weakly typed language. It allows implicit conversions as well as forced casting. 
+- Depending on precision and range : short , default , long , float , double and char are used. 
+- Individual sizes are machine and compiler dependent 
+
+- Big Endian : the MSB occupy the lower address 
+- Little Endian : LSB occupy the lower address . Used in x86 
+- 0x - hex , 0 - Octal , 3UL - unsigned long , 3.14f - float , 3.14L - double 
+- 1 = True , 0 = False 
+
