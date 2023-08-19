@@ -1,6 +1,6 @@
-course link : https://ocw.mit.edu/courses/6-087-practical-programming-in-c-january-iap-2010/
+Course link : https://ocw.mit.edu/courses/6-087-practical-programming-in-c-january-iap-2010/
 
-I have fairly good experience on C from work but no formal study from university so this notes will just capture the things that i might not know or find it interesting to note down 
+I have fairly good experience on C from work but no formal study from university so this notes will just capture the things that i might not know or find it interesting to note down
 
 ## Lecture 1 - Introduction. Writing, compiling, and debugging C programs. Hello world.
 
@@ -71,6 +71,25 @@ I have fairly good experience on C from work but no formal study from university
         - Registers donot reside in addressed memory so pointer of a register variable is illegal 
 
 
+## Lecture 4 - More control flow. Input and Output
+- `goto` will most defintely leads to sphaghetti code 
+- Languges like C++ and Java provide exception mechanism to recover from errors. In C, goto provides a convenient way to exit from nested blocks. (dont ever use it tho :p )
+- Input and Output facilities are provided by standard library <stdio.h> and not by the langugae itself
+- A binary stream consists of series of raw bytes 
+- Streams provided by standard library are buffered 
+- To use a file instead of standard output use < operator (unix)
+- Input redirection : a.out < file.txt. Treats file.txt as the source of standard output. This is OS feature not a language feature.
+- C allows to read data from text/binary files using fopen()
+    - mode can be read , write and append etc:- , b can be appended for binary files 
+    - fopen returns a pointer to the filestream if it exists or NULL otherwise 
+    - int fclose(FILE* fp ) closes the stream 
+    - fclose() is automatically called on all open files when program terminates
+- int getc(FILE *fp) reads a single character from the stream 
+    - return the char read or EOF on error/end of the file. 
+- fgets() reads a single line from the inpuut stream and returns a pointer to char array that stores line. 
+- putc() writes a single char c to the output stream , returns the char written or EOF on error 
+- fputs() writes a single line to output stream 
+- fscanf() similar to scanf,sscanf and reads items from input stream fp 
 
 
 
