@@ -28,14 +28,28 @@ int main(int argc,char* argv[])
             exit(-1);
         }
         nc=nw=nl=0;
+        char prev = ' ';
         while((c=getc(fp))!=EOF)
         {
 	        /*TODO:FILL HERE
 		    process the file using getc(fp)
 			*/
-            
+            if(c=='\n')
+            {
+                nl++;
+            }
+            if(c!= ' ' && c != '\t' && c != '\n') //could have just used isspace here
+            {
+                nc++;
+            }
+            if((prev == ' ' || prev == '\t' || prev == '\n') && (c!= ' ' && c != '\t' && c != '\n'))
+            {
+                nw++;
+            }
+            prev = c; 
         }
         printf("%ld %s\n",nc,currfile);
+        printf("%ld %s\n",nw,currfile);
         /*next file if exists*/
         nfiles--;
         if(nfiles>0)
