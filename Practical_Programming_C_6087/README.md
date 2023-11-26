@@ -91,6 +91,10 @@ I have fairly good experience on C from work but no formal study from university
 - fputs() writes a single line to output stream 
 - fscanf() similar to scanf,sscanf and reads items from input stream fp 
 
+## Pointers and memory addressing. Arrays and pointer arithmetic. Strings. Searching and sorting algorithms 
+
+
+
 
 
 
