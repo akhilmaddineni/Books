@@ -330,7 +330,7 @@ fn main() {
 
 ### Structs 
 - Custom data type that lets you package together and name multiple related values that make up a meaningful group. 
-- Structs are similar to tuples but you need name ach piece of data so its clear what the values mean . 
+- Structs are similar to tuples but you need name each piece of data so its clear what the values mean . 
 
 ```
 struct User {
@@ -339,10 +339,45 @@ struct User {
     email: String,
     sign_in_count: u64,
 }
+
+fn main() {
+    let mut user1 = User {
+        active: true,
+        username: String::from("someusername123"),
+        email: String::from("someone@example.com"),
+        sign_in_count: 1,
+    };
+    user1.email = String::from("anotheremail@example.com");
+}
 ```
+- Note that the entire instance must be mutable; Rust doesn’t allow us to mark only certain fields as mutable
 
+### Creating instances from other instances with Struct Update Syntax 
+- Its often useful to create a new instance of struct that includes most of the values from another instance but changes some , we can use struct update syntax.
+```
+fn main() {
+    // --snip--
 
+    let user2 = User {
+        email: String::from("another@example.com"),
+        ..user1
+    };
+}
+```
+- Here syntax `..` specifies that remaining fields not explicitly set should have same value as the fields in the given instance. 
 
+### Tuple structs without named fields to create different types 
+- Tuples dont have names associated with their fields but rather they just have types of the fields.
+```
+struct Color(i32, i32, i32);
+struct Point(i32, i32, i32);
+
+fn main() {
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+}
+
+```
 
 
 
